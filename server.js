@@ -14,3 +14,7 @@ app.listen(3001, () => {
 app.get("/api", (req, res) => {
     res.status(200).send("Bem vim à imersão");
 });
+
+app.get("/", (req, res) =>  {
+    res.status(200).send("Bem vindo a minha API");
+});
