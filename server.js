@@ -1,6 +1,9 @@
 //importa o express
 import express from "express";
+//importa a constante routes do arquivo postsRoutes.js
 import routes from "./src/routes/postsRoutes.js";
+
+
 
 //dados Mokados:
 // const posts = [
@@ -15,40 +18,18 @@ import routes from "./src/routes/postsRoutes.js";
 //       video: "https://player.vimeo.com/video/123456789",
 //       data: new Date(2023, 11, 25),
 //       autor: "João Silva"
-//     },
-//     {
-//       id: 3, 
-//       descricao: "GIF animado super divertido! ",
-//       gif: "https://media.giphy.com/media/3o7aCSPqXE5C6T8/giphy.gif",
-//       categoria: "Humor"
-//     },
-//     {
-//       id: 4,
-//       descricao: "Uma receita deliciosa de bolo de chocolate!  #bolodechocolate #receita",
-//       imagem: "https://www.example.com/bolo-de-chocolate.jpg",
-//       data: new Date(2023, 11, 27),
-//       autor: "Maria Oliveira",
-//       comentarios: 20
-//     },
-//     {
-//       id: 5, 
-//       descricao: "Texto inspirador sobre a vida. ❤️ #motivação #positividade",
-//       texto: "A vida é uma jornada incrível...",
-//       data: new Date(2023, 11, 28)
-//     },
-//     {
-//       id: 6, 
-//       descricao: "Uma foto da minha viagem para Paris!  #Paris #viagem",
-//       imagem: "https://www.example.com/paris.jpg",
-//       local: "Paris, França"
 //     }
 //   ];
 
-//atribui tudo oque o express pode fazer para a variavel app
+
+
+
+//atribui tudo oque o express pode fazer para a variavel app, criado uma instancia de express
 const app = express();
+//puxa a função routes e o app express, routes(app): Chama a função routes que foi importada, passando a instância do Express como argumento. Essa função define todas as rotas da aplicação, como /posts, /posts/:id, etc.
 routes(app)
 
-//subir o servidor
+//subir o servidor, Inicia o servidor Express na porta 3001. Quando o servidor estiver ouvindo nessa porta, o callback será executado, imprimindo uma mensagem no console.
 app.listen(3001, () => {
     console.log("Servidor escutando...");
     // res.send("Servidor rodando na porta 3000");

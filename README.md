@@ -196,3 +196,12 @@ package.json - em package.json adicionamos comandos ao script:
    server.js é o arquivo que contém o código do servidor.
 
 AGORA PARA INICIAR O SERVIDOR: npm run dev
+
+aula 3: Conectando sua API ao MongoDB: Estrutura, Conexão e Refatoração-
+
+- dbConfig.js - foi criado arquivo na models fazendo a conexão com o DB,
+- postsControllers.js - controllers para lidar com as requisições e respostas das rotas, como os posts da rota posts.
+- postsRoutes.js - e um arquivo na pasta routes com uma função routes que recebe o app do express para usar em todos os arquivos que precisarem e principalmente é aonde é definido as rotas
+
+foi criado o arquivo .env - Atribui uma string de conexão do MongoDB a uma variável. Essa string contém as informações necessárias para conectar seu aplicativo a um banco de dados MongoDB específico, como o endereço do banco, as credenciais de acesso e outras configurações.
+ Um arquivo .env é utilizado para armazenar de forma segura variáveis de ambiente, como a string de conexão do banco de dados. Isso evita que informações sensíveis sejam expostas diretamente no código e facilita a gestão de diferentes ambientes de desenvolvimento.
