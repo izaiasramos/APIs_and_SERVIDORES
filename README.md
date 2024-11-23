@@ -145,3 +145,54 @@ Próximos passos:
 Banco de dados: Para aplicações maiores, você pode usar um banco de dados para armazenar os posts de forma persistente.
 Autenticação: Para proteger sua API, você pode implementar mecanismos de autenticação para permitir o acesso apenas a usuários autorizados.
 Validação de dados: Você pode adicionar validação para garantir que os dados recebidos nas requisições estejam no formato correto.
+
+a aula 3 começamos instalando a comunicação com o banco de dados mongodb atlas em nuvem: npm install mongodb
+
+isso vai me dar a posibilidade de acesso ao banco de dados.
+
+agora fazemos a  conexão com o banco de dados:
+
+antes fomos no mongodb atlas e criamos um banco de dados: 
+imersao-instabytes e uma collection: posts
+
+assim agora já temos um database e uma tabela criada.
+
+la nos criamos dois registros na tabela posts, que seria os dois primeiros dados mokados que criamos na aula 2.
+
+//dados Mokados:
+const posts = [
+    {
+      id: 1, 
+      descricao: "Uma foto de teste",
+      imagem: "https://picsum.photos/200/300",
+    },
+    {
+      id: 2, 
+      descricao: "Vídeo incrível da natureza!  #natureza #paz",
+      video: "https://player.vimeo.com/video/123456789",
+      data: new Date(2023, 11, 25),
+      autor: "João Silva"
+    }
+]
+
+agora que já temos o database, a tabela e seus registros, temos a string de conexão com o banco de dados, agora vamos efetivamente conectar com o banco de dados:
+
+Vamos criar um arquivo chamado .env para criar uma variável de ambiente(isso quer dizer que ela vai existir somente dentro do nosso ambiente, ficará inacessivel externamente, ou seja, não vai subir para o github por exemplo) lá faremos a conexão com o banco de dados.
+
+//o padrão dessas variáveis de ambiente é o nome da variável em maiúsculo separados por underline
+
+STRING_CONEXAO = mongodb+srv://izaiasramos:Adoroestudar1!@cluster0.sf0s1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+
+package.json - em package.json adicionamos comandos ao script:
+
+  "scripts": {
+    "dev": "node --watch(ou nodemon) --env-file=.env server.js",
+    "test": ""
+  },
+  isso diz ao node para executar os seguintes comandos:
+   --wathc ou nodemon se estiver instalado vai ficar escutando as mudanças que acontecem no arquivo server.js e vai reiniciar o servidor automaticamente.
+   --env-file=.env vai carregar as variaveis de ambiente do arquivo .env
+   server.js é o arquivo que contém o código do servidor.
+
+AGORA PARA INICIAR O SERVIDOR: npm run dev
