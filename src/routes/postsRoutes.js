@@ -1,29 +1,36 @@
-// todas as minhas rotas:
+import express from "express"; // Importa o framework Express para criar a aplicação web
+import multer from "multer"; // Importa o Multer para lidar com uploads de arquivos
+import { listarPosts, postarNovoPost, uploadImagem } from "../controllers/postsControllers.js"; // Importa as funções controladoras para lidar com a lógica dos posts
 
-import express from "express";
-// Importa o módulo Express, que é a base para criar a aplicação web. Ele fornece ferramentas para lidar com requisições HTTP.
+// Configura o armazenamento do Multer para uploads de imagens
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // Especifica o diretório para armazenar as imagens enviadas
+    cb(null, 'uploads/'); // Substitua por seu caminho de upload desejado
+  },
+  filename: function (req, file, cb) {
+    // Mantém o nome original do arquivo por simplicidade
+    cb(null, file.originalname); // Considere usar uma estratégia de geração de nomes únicos para produção
+  }
+});
 
-import { listarPosts, listarUsers } from "../controllers/postsControllers.js";
-// Importa a função `listarPosts` e listarUsers do arquivo `postsControllers.js`. Essa função se conecta ao banco de dados e retorna os posts e os users.
+// Cria uma instância do middleware Multer
+const upload = multer({ storage: storage });
+//const upload = multer({ dest: "./uploads", storage});
 
-const routes = (app) => {//
-// Define uma função chamada `routes` que recebe a aplicação Express como parâmetro. Essa função será responsável por configurar as rotas da aplicação.
+// Define as rotas usando o objeto Express app
+const routes = (app) => {
+  // Permite que o servidor interprete corpos de requisições no formato JSON
+  app.use(express.json());
 
-    app.use(express.json());//faz com que o express faça o parse do json, transforme a requisição que vem em texto em json
-    // Habilita o middleware `express.json()`. Isso permite que o Express entenda as requisições que enviam dados no formato JSON.
+  // Rota para recuperar uma lista de todos os posts
+  app.get("/posts", listarPosts); // Chama a função controladora apropriada
 
-    // cria uma rota, pagina inicial
-    app.get("/", (req, res) =>  {
-        res.status(200).send("Bem vindo a minha API");//função de callback executada quando a rota é acessada
-        // Define uma rota GET para a raiz (/) da aplicação. Quando essa rota é acessada, a função de callback é executada, enviando uma resposta com o status 200 (OK) e a mensagem "Bem vindo a minha API".
-    });
+  // Rota para criar um novo post
+  app.post("/posts", postarNovoPost); // Chama a função controladora para criação de posts
 
-    // cria uma rota dos posts, e passa a função que lista todos os posts salvos no DB
-    app.get("/posts", listarPosts);
-    // Define uma rota GET para a rota "/posts". Quando essa rota é acessada, a função `listarPosts` é chamada. Essa função provavelmente buscará todos os posts no banco de dados e enviará a resposta.
-
-    app.get("/users", listarUsers);
-}
+  // Rota para upload de imagens (assumindo uma única imagem chamada "imagem")
+  app.post("/upload", upload.single("imagem"), uploadImagem); // Chama a função controladora para processamento da imagem
+};
 
 export default routes;
-// Exporta a função `routes` como padrão, permitindo que ela seja importada em outros arquivos.

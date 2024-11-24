@@ -26,11 +26,12 @@ import routes from "./src/routes/postsRoutes.js";
 
 //atribui tudo oque o express pode fazer para a variavel app, criado uma instancia de express
 const app = express();
+
 //puxa a função routes e o app express, routes(app): Chama a função routes que foi importada, passando a instância do Express como argumento. Essa função define todas as rotas da aplicação, como /posts, /posts/:id, etc.
 routes(app)
 
 //subir o servidor, Inicia o servidor Express na porta 3001. Quando o servidor estiver ouvindo nessa porta, o callback será executado, imprimindo uma mensagem no console.
-app.listen(3001, () => {
+app.listen(3000, () => {
     console.log("Servidor escutando...");
     // res.send("Servidor rodando na porta 3000");
 });

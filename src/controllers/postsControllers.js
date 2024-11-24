@@ -1,21 +1,55 @@
-// todas as responsabilidades de lidar com as requisições e respostas
-// aqui listaremos os postes lá na rota, que vai receber a requisição, executar a função 
-// getTodosPosts e enviar a resposta:
+// Importa as funções para buscar e criar posts do modelo de dados
+import {getTodosPosts, criarPost} from "../models/postsModels.js";
+// Importa o módulo do sistema de arquivos para manipular arquivos
+import fs from "fs";
 
-// Importa o objeto padrão (default export) do arquivo `postsModels.js`.
-import postsModels from "../models/postsModels.js";
-// Desestrutura o objeto `postsModels` para extrair as funções `getTodosPosts` e `getUsers`.
-const { getTodosPosts, getUsers } = postsModels;
-
+// Define uma função assíncrona para listar todos os posts
 export async function listarPosts(req, res) {
-    // Define uma função assíncrona chamada `listarPosts` que recebe como parâmetros a requisição (req) e a resposta (res).
+     // Chama a função para buscar todos os posts do banco de dados
     const posts = await getTodosPosts();
-    // Chama a função `getTodosPosts` e armazena o resultado (um array de posts) na variável `posts`. O `await` indica que a função é assíncrona e espera o resultado antes de continuar.
-
+    // Envia uma resposta HTTP com status 200 (OK) e os posts no formato JSON
     res.status(200).json(posts);
-    // Envia uma resposta HTTP com o status 200 (sucesso) e o corpo da resposta como um JSON contendo o array de posts.
 }
-export async function listarUsers(req, res) {
-    const users = await getUsers();
-    res.status(200).json(users);
+
+// Define uma função assíncrona para criar um novo post
+export async function postarNovoPost(req, res) {
+    // Obtém os dados do novo post a partir do corpo da requisição
+    const novoPost = req.body;
+    // Tenta criar o novo post
+    try {
+        // Chama a função para criar um novo post no banco de dados
+        const postCriado = await criarPost(novoPost);
+        // Envia uma resposta HTTP com status 200 (OK) e o post criado
+        res.status(200).json(postCriado);  
+    } catch(erro) {
+        // Captura qualquer erro que possa ocorrer durante a criação do post
+        console.error(erro.message);
+        // Envia uma resposta HTTP com status 500 (Erro interno do servidor) e uma mensagem de erro
+        res.status(500).json({"Erro":"Falha na requisição"})
+    }
+}
+// Define uma função assíncrona para fazer upload de uma imagem e criar um novo post
+export async function uploadImagem(req, res) {
+    // Cria um objeto com os dados do novo post, incluindo o nome da imagem
+    const novoPost = {
+        descricao: "",
+        imgUrl: req.file.originalname,
+        alt: ""
+    };
+    // Tenta criar o novo post e mover a imagem para o local correto
+    try {
+        // Chama a função para criar um novo post no banco de dados  
+        const postCriado = await criarPost(novoPost);
+        // Gera um novo nome para a imagem usando o ID do post criado
+        const imagemAtualizada = `uploads/${postCriado.insertedId}.png`
+        // Move a imagem para o local de destino
+        fs.renameSync(req.file.path, imagemAtualizada)
+        // Envia uma resposta HTTP com status 200 (OK) e o post criado
+        res.status(200).json(postCriado);  
+    } catch(erro) {
+        // Captura qualquer erro que possa ocorrer durante o processo
+        console.error(erro.message);
+        // Envia uma resposta HTTP com status 500 (Erro interno do servidor) e uma mensagem de erro
+        res.status(500).json({"Erro":"Falha na requisição"})
+    }
 }

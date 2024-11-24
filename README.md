@@ -197,7 +197,7 @@ package.json - em package.json adicionamos comandos ao script:
 
 AGORA PARA INICIAR O SERVIDOR: npm run dev
 
-aula 3: Conectando sua API ao MongoDB: Estrutura, Conexão e Refatoração-
+AULA 3: Conectando sua API ao MongoDB: Estrutura, Conexão e Refatoração-
 
 - dbConfig.js - foi criado arquivo na models fazendo a conexão com o DB,
 - postsControllers.js - controllers para lidar com as requisições e respostas das rotas, como os posts da rota posts.
@@ -205,3 +205,40 @@ aula 3: Conectando sua API ao MongoDB: Estrutura, Conexão e Refatoração-
 
 foi criado o arquivo .env - Atribui uma string de conexão do MongoDB a uma variável. Essa string contém as informações necessárias para conectar seu aplicativo a um banco de dados MongoDB específico, como o endereço do banco, as credenciais de acesso e outras configurações.
  Um arquivo .env é utilizado para armazenar de forma segura variáveis de ambiente, como a string de conexão do banco de dados. Isso evita que informações sensíveis sejam expostas diretamente no código e facilita a gestão de diferentes ambientes de desenvolvimento.
+
+AULA 4 - Implementando Armazenamento e Upload de Imagens
+
+Os quatro principais verbos HTTP usados pelo Express são:
+
+GET - PEGA DADOS, USADO PARA REQUISIÇÕES DE RECUPERAÇÃO DE DADOS
+
+Recupera informações de um recurso, como dados ou páginas, sem alterar o servidor (ex.: consultar posts).
+
+POST - CRIA DADOS
+
+Envia dados para criar um novo recurso no servidor (ex.: cadastrar um usuário).
+
+PUT - ATUALIZA DADOS
+
+Atualiza completamente um recurso existente no servidor (ex.: substituir dados de um post).
+
+DELETE - REMOVE DADOS
+
+Remove um recurso existente do servidor (ex.: deletar um comentário).
+Esses verbos são fundamentais para a arquitetura REST e são usados no Express para definir rotas específicas para cada operação.
+
+body - toda requisição que chega ao servidor, tem um corpo, que é o conteúdo que está sendo enviado pelo cliente.
+
+Para postar um novo post, usamos a extensão Thunder Client para postar apenas caractheres, que é uma extensão do VSCode que facilita o teste de APIs.
+E permite no caso que eu insira registros no DB.
+
+Thunder Client é uma extensão do Visual Studio Code que permite testar APIs RESTful de forma fácil e eficiente. Ela oferece uma interface intuitiva para enviar solicitações HTTP, visualizar respostas e gerenciar cabeçalhos.
+A extensão Thunder Client é uma ferramenta útil para desenvolvedores que trabalham com APIs, pois permite testar rapidamente as rotas e verificar se as respostas estão conforme o esperado.
+
+Multer - é uma biblioteca que permite a manipulação de arquivos enviados em requisições HTTP. Ela é frequentemente usada em conjunto com o Express para lidar com uploads de arquivos.
+
+devemos insta-la no projeto: npm install multer
+ 
+postman - é uma ferramenta de teste de API que permite enviar solicitações HTTP e visualizar as respostas. É útil para testar APIs e verificar se as respostas estão conforme o esperado.
+
+Usamos o postman para enviar uma imagem real para o servidor e salvar no banco de dados.

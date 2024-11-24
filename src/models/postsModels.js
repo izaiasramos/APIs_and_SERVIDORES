@@ -1,27 +1,24 @@
-// Importa a função `conectarAoBanco` do arquivo `dbConfig.js`
-import conectarAoBanco from "../config/dbConfig.js";
-
-// Conecta ao banco de dados MongoDB usando a string de conexão fornecida pela variável de ambiente `STRING_CONEXAO`
+import conectarAoBanco from "../config/dbConfig.js"
+// Conecta ao banco de dados utilizando a string de conexão fornecida como variável de ambiente
 const conexao = await conectarAoBanco(process.env.STRING_CONEXAO);
 
-// Define uma função assíncrona chamada `getTodosPosts`
-export async function getTodosPosts(){
-    // Obtém o banco de dados chamado "imersao-instabytes"
+// Função assíncrona para buscar todos os posts do banco de dados
+export async function getTodosPosts() {
+    // Seleciona o banco de dados "imersao-instabytes"
     const db = conexao.db("imersao-instabytes");
-
-    // Obtém a coleção de posts dentro do banco de dados
+    // Seleciona a coleção "posts" dentro do banco de dados
     const colecao = db.collection("posts");
+    // Retorna um array com todos os documentos da coleção
+    return colecao.find().toArray();
+}
 
-    // Busca todos os documentos da coleção "posts" e retorna um array com os resultados
-    return colecao.find().toArray();
-}
-export async function getUsers() {
+export async function criarPost(novoPost) {
     const db = conexao.db("imersao-instabytes");
-    const colecao = db.collection("users");
-    return colecao.find().toArray();
+    const colecao = db.collection("posts");
+    return colecao.insertOne(novoPost)
 }
-//exportação default(exportação padrão), exporta somente a função descrita 
+
 export default {
     getTodosPosts,
-    getUsers
-};
+    criarPost
+}
