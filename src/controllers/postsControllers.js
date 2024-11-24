@@ -2,8 +2,10 @@
 // aqui listaremos os postes lá na rota, que vai receber a requisição, executar a função 
 // getTodosPosts e enviar a resposta:
 
-import getTodosPosts from "../models/postsModels.js";
-// Importa a função `getTodosPosts` do arquivo `postsModels.js`. Essa função é responsável por buscar todos os posts do banco de dados.
+// Importa o objeto padrão (default export) do arquivo `postsModels.js`.
+import postsModels from "../models/postsModels.js";
+// Desestrutura o objeto `postsModels` para extrair as funções `getTodosPosts` e `getUsers`.
+const { getTodosPosts, getUsers } = postsModels;
 
 export async function listarPosts(req, res) {
     // Define uma função assíncrona chamada `listarPosts` que recebe como parâmetros a requisição (req) e a resposta (res).
@@ -12,4 +14,8 @@ export async function listarPosts(req, res) {
 
     res.status(200).json(posts);
     // Envia uma resposta HTTP com o status 200 (sucesso) e o corpo da resposta como um JSON contendo o array de posts.
+}
+export async function listarUsers(req, res) {
+    const users = await getUsers();
+    res.status(200).json(users);
 }

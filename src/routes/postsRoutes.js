@@ -3,8 +3,8 @@
 import express from "express";
 // Importa o módulo Express, que é a base para criar a aplicação web. Ele fornece ferramentas para lidar com requisições HTTP.
 
-import { listarPosts } from "../controllers/postsControllers.js";
-// Importa a função `listarPosts` do arquivo `postsControllers.js`. Essa função provavelmente se conecta ao banco de dados e retorna os posts.
+import { listarPosts, listarUsers } from "../controllers/postsControllers.js";
+// Importa a função `listarPosts` e listarUsers do arquivo `postsControllers.js`. Essa função se conecta ao banco de dados e retorna os posts e os users.
 
 const routes = (app) => {//
 // Define uma função chamada `routes` que recebe a aplicação Express como parâmetro. Essa função será responsável por configurar as rotas da aplicação.
@@ -22,7 +22,8 @@ const routes = (app) => {//
     app.get("/posts", listarPosts);
     // Define uma rota GET para a rota "/posts". Quando essa rota é acessada, a função `listarPosts` é chamada. Essa função provavelmente buscará todos os posts no banco de dados e enviará a resposta.
 
-    }
+    app.get("/users", listarUsers);
+}
 
 export default routes;
 // Exporta a função `routes` como padrão, permitindo que ela seja importada em outros arquivos.
