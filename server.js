@@ -27,6 +27,8 @@ import routes from "./src/routes/postsRoutes.js";
 //atribui tudo oque o express pode fazer para a variavel app, criado uma instancia de express
 const app = express();
 
+//abrir pasta para acessar as imagens, qualquer coisa que estiver dentro da pasta uploads vai ser acessada pelos usuarios
+app.use(express.static("uploads"));
 //puxa a função routes e o app express, routes(app): Chama a função routes que foi importada, passando a instância do Express como argumento. Essa função define todas as rotas da aplicação, como /posts, /posts/:id, etc.
 routes(app)
 

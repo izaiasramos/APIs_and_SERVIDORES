@@ -1,5 +1,5 @@
 // Importa as funções para buscar e criar posts do modelo de dados
-import {getTodosPosts, criarPost} from "../models/postsModels.js";
+import {getTodosPosts, criarPost, atualizarPost} from "../models/postsModels.js";
 // Importa o módulo do sistema de arquivos para manipular arquivos
 import fs from "fs";
 
@@ -33,7 +33,7 @@ export async function uploadImagem(req, res) {
     // Cria um objeto com os dados do novo post, incluindo o nome da imagem
     const novoPost = {
         descricao: "",
-        imgUrl: req.file.originalname,
+        Url: req.file.originalname,
         alt: ""
     };
     // Tenta criar o novo post e mover a imagem para o local correto
@@ -48,6 +48,29 @@ export async function uploadImagem(req, res) {
         res.status(200).json(postCriado);  
     } catch(erro) {
         // Captura qualquer erro que possa ocorrer durante o processo
+        console.error(erro.message);
+        // Envia uma resposta HTTP com status 500 (Erro interno do servidor) e uma mensagem de erro
+        res.status(500).json({"Erro":"Falha na requisição"})
+    }
+}
+export async function atualizarNovoPost(req, res) {
+    // Obtém o id do novo post a partir do corpo da requisição
+    const id = req.params.id;
+    const urlImagem = `https://localhost:3000/uploads/${id}.png`;
+    //montar um objeto com os dados do novo post que vem pela requisição
+    const post = {
+        descricao: req.body.descricao,
+        Url: urlImagem,
+        alt: req.body.alt
+    };
+    // Tenta criar o novo post
+    try {
+        // Chama a função para criar um novo post no banco de dados
+        const postCriado = await atualizarPost(id, post);
+        // Envia uma resposta HTTP com status 200 (OK) e o post criado
+        res.status(200).json(postCriado);  
+    } catch(erro) {
+        // Captura qualquer erro que possa ocorrer durante a criação do post
         console.error(erro.message);
         // Envia uma resposta HTTP com status 500 (Erro interno do servidor) e uma mensagem de erro
         res.status(500).json({"Erro":"Falha na requisição"})

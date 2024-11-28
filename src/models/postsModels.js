@@ -12,13 +12,29 @@ export async function getTodosPosts() {
     return colecao.find().toArray();
 }
 
+// Função assíncrona para criar um novo post no banco de dados
 export async function criarPost(novoPost) {
+    // Seleciona o banco de dados "imersao-instabytes"
+    const db = conexao.db("imersao-instabytes");
+    // Seleciona a coleção "posts"
+    const colecao = db.collection("posts");
+    // Insere um novo documento (o novo post) na coleção
+    // O método `insertOne()` retorna um objeto com informações sobre a inserção,
+    // incluindo o ID do documento inserido
+    return colecao.insertOne(novoPost)
+}
+
+export async function atualizarPost(id, novoPost) {
     const db = conexao.db("imersao-instabytes");
     const colecao = db.collection("posts");
-    return colecao.insertOne(novoPost)
+    //guardar no objectId o id do post, é uma forma que o MongoDB obriga a usar para saber qual é o id do post que queremos atualizar
+    const ObjID = new ObjectId.createFromHexString(id);
+    // return colecao.updateOne(id, `${novoPost}`);
+ return colecao.updateOne({_id: new ObjectId(ObjID)}, {$set: novoPost});
 }
 
 export default {
     getTodosPosts,
-    criarPost
+    criarPost,
+    atualizarPost
 }
