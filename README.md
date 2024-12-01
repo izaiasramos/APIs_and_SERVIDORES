@@ -242,3 +242,40 @@ devemos insta-la no projeto: npm install multer
 postman - é uma ferramenta de teste de API que permite enviar solicitações HTTP e visualizar as respostas. É útil para testar APIs e verificar se as respostas estão conforme o esperado.
 
 Usamos o postman para enviar uma imagem real para o servidor e salvar no banco de dados.
+
+AULA 5 - Publicando na Google Cloud: Configuração de API e Integração com Gemini
+
+ .env :Aqui crio variáveis de ambiente para o projeto
+
+ - No .env criamos uma variável de ambiente chamada GEMINI_API_KEY e atribuímos a ela a chave da API do Gemini. é ela que nos dará conexão com a API do Gemini.
+
+//chave da api do google gemini
+GEMINI_API_KEY = AIzaSyBOkdyVKhvlYhJQsfay9LicXr3RI5PYGeI
+
+- SERVICES/geminiServices.js - arquivo que contém a função gerarDescricaoComGemini que é responsável por gerar uma descrição de uma imagem usando a API do Gemini.
+  Aqui foi inserido o código para gerar uma descrição de uma imagem usando a API do Gemini. Esse codigo foi copia e cola apenas porque é o padrão do Gemini para usar sua api, a unica coisa qque alteramos foi o prompt para dizer ao gemini que ele deve gerar uma descrição de acordo com a imagem.
+
+- CONTROLLERS/postsController.js - aqui foi importado a função da api criada no geminiServices.js 
+// Importa o módulo do sistema de arquivos para manipular arquivos
+import fs from "fs";  
+// importa a função gerarDescricaoComGemini do arquivo geminiServices.js
+import gerarDescricaoComGemini from "../services/geminiServices.js";
+
+ // Alteramos o try da função createPost para incluir a geração de descrição da imagem usando a API do Gemini
+    try {
+        // Gera um novo nome para a imagem usando o ID do post criado
+        const imgBuffer = fs.readFileSync(`uploads/${id}.png`);
+        const descricao = await gerarDescricaoComGemini(imgBuffer);
+        //montar um objeto com os dados do novo post que vem pela requisição
+        const post = {
+            Url: urlImagem,
+            descricao: descricao,
+            alt: req.body.alt
+        };
+        ...
+    }
+criado a função gerarDescricaoComGemini que é responsável por gerar uma descrição de uma imagem usando a API do Gemini.
+
+INSTALAR AS DEPENDENCIAS DO  GEMINI - Para dar certo temos que baixar as dependencias do gemini:
+
+npm i @google/generative-ai

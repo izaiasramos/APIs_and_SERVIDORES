@@ -2,6 +2,7 @@
 import {getTodosPosts, criarPost, atualizarPost} from "../models/postsModels.js";
 // Importa o módulo do sistema de arquivos para manipular arquivos
 import fs from "fs";
+import gerarDescricaoComGemini from "../services/geminiServices.js";
 
 // Define uma função assíncrona para listar todos os posts
 export async function listarPosts(req, res) {
@@ -57,14 +58,18 @@ export async function atualizarNovoPost(req, res) {
     // Obtém o id do novo post a partir do corpo da requisição
     const id = req.params.id;
     const urlImagem = `https://localhost:3000/uploads/${id}.png`;
-    //montar um objeto com os dados do novo post que vem pela requisição
-    const post = {
-        Url: urlImagem,
-        descricao: req.body.descricao,
-        alt: req.body.alt
-    };
+
     // Tenta criar o novo post
     try {
+        // Gera um novo nome para a imagem usando o ID do post criado
+        const imgBuffer = fs.readFileSync(`uploads/${id}.png`);
+        const descricao = await gerarDescricaoComGemini(imgBuffer);
+        //montar um objeto com os dados do novo post que vem pela requisição
+        const post = {
+            Url: urlImagem,
+            descricao: descricao,
+            alt: req.body.alt
+        };
         // Chama a função para criar um novo post no banco de dados
         const postCriado = await atualizarPost(id, post);
         // Envia uma resposta HTTP com status 200 (OK) e o post criado

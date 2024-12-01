@@ -24,13 +24,17 @@ export async function criarPost(novoPost) {
     return colecao.insertOne(novoPost)
 }
 
+import { ObjectId } from "mongodb"; // Importa o ObjectId para manipular IDs do MongoDB
+
 export async function atualizarPost(id, novoPost) {
     const db = conexao.db("imersao-instabytes");
     const colecao = db.collection("posts");
-    //guardar no objectId o id do post, é uma forma que o MongoDB obriga a usar para saber qual é o id do post que queremos atualizar
-    const ObjID = new ObjectId.createFromHexString(id);
-    // return colecao.updateOne(id, `${novoPost}`);
- return colecao.updateOne({_id: new ObjectId(ObjID)}, {$set: novoPost});
+
+    // Cria um ObjectId diretamente do ID fornecido
+    const ObjID = new ObjectId(id);
+
+    // Atualiza o documento correspondente ao ID
+    return colecao.updateOne({ _id: ObjID }, { $set: novoPost });
 }
 
 export default {
