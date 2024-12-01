@@ -59,8 +59,8 @@ export async function atualizarNovoPost(req, res) {
     const urlImagem = `https://localhost:3000/uploads/${id}.png`;
     //montar um objeto com os dados do novo post que vem pela requisição
     const post = {
-        descricao: req.body.descricao,
         Url: urlImagem,
+        descricao: req.body.descricao,
         alt: req.body.alt
     };
     // Tenta criar o novo post
