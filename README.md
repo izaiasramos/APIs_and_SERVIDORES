@@ -244,12 +244,23 @@ postman - é uma ferramenta de teste de API que permite enviar solicitações HT
 Usamos o postman para enviar uma imagem real para o servidor e salvar no banco de dados.
 
 AULA 5 - Publicando na Google Cloud: Configuração de API e Integração com Gemini
+  Nesta última aula, vamos finalizar o projeto, colocando a lógica de armazenamento de imagens no servidor, integrando o Front-End do projeto e, fazendo o deploy do back-end na Google Cloud.
+
+  Nesta aula, você vai:
+  Fazer a lógica de armazenamento de imagens no servidor;
+  Criar a rota PUT para atualização de post;
+  Integrar com o Frontend;
+  Integrar com a API do Gemini;
+  Fazer o deploy do back-end na Google Cloud.
 
  .env :Aqui crio variáveis de ambiente para o projeto
 
  - No .env criamos uma variável de ambiente chamada GEMINI_API_KEY e atribuímos a ela a chave da API do Gemini. é ela que nos dará conexão com a API do Gemini.
 
-//chave da api do google gemini
+ Sit/Url para gerar chave da API GEMINI: https://aistudio.google.com/app/apikey?utm_source=website&utm_medium=referral&utm_campaign=Alura-dev-backend-immersion&utm_content=
+
+//chave da api do google gemini já gerada para uso no projeto:
+
 GEMINI_API_KEY = AIzaSyBOkdyVKhvlYhJQsfay9LicXr3RI5PYGeI
 
 - SERVICES/geminiServices.js - arquivo que contém a função gerarDescricaoComGemini que é responsável por gerar uma descrição de uma imagem usando a API do Gemini.
@@ -279,3 +290,10 @@ criado a função gerarDescricaoComGemini que é responsável por gerar uma desc
 INSTALAR AS DEPENDENCIAS DO  GEMINI - Para dar certo temos que baixar as dependencias do gemini:
 
 npm i @google/generative-ai
+
+e pronto agora podemos usar a api do gemini.
+
+Agora faremos a conexão do Back com o Front.
+é como criar um aviso para o Back que receberá requisições de um outro endereço.
+
+para isso instalaremos o cors: npm i cors
