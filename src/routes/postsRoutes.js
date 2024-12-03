@@ -3,7 +3,7 @@ import multer from "multer"; // Importa o Multer para lidar com uploads de arqui
 import cors from "cors"; // Importa o CORS para lidar com solicitações de diferentes origens//Habilitar comunicação com o Front
 import { listarPosts, postarNovoPost, uploadImagem, atualizarNovoPost } from "../controllers/postsControllers.js"; // Importa as funções controladoras para lidar com a lógica dos posts
 
-const cors = {
+const corsOptions = {
   origin: "http://localhost:8000", // Define a origem permitida para solicitações CORS//Habilitar comunicação com o endereço Front
   optionsSuccessStatus: 200 // Define o status de sucesso para solicitações CORS
 }
